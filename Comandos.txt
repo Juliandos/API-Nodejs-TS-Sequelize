@@ -7,3 +7,7 @@ npm i express cors dotenv mysql2 multer sequelize sequelize-auto typescript
 npm install --save-dev typescript ts-node-dev @types/node @types/express sequelize-cli
 npm i @types/express @types/cors @types/dotenv @types/mysql2 @types/multer -D
 npx sequelize-cli init
+npm install --save-dev sequelize-auto
+npx sequelize-cli migration:generate --name create-usuario
+npx sequelize-cli db:migrate
+npx sequelize-auto -o "./src/models" -d api_node_sequelize -u root -h localhost -e mysql -l ts
