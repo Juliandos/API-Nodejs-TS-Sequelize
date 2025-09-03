@@ -1,8 +1,21 @@
-import { getRol } from '@/controllers/roles';
-import express, { Request, Response } from 'express';
+import { Router } from "express";
+import { getRoles, getRol, createRol, updateRol, deleteRol } from "@/controllers/roles";
 
-const router = express.Router();
+const router = Router();
 
-router.get('/', getRol);
+// GET all roles
+router.get("/", getRoles);
 
-export {router};
+// GET one role by id
+router.get("/:id", getRol);
+
+// CREATE new role
+router.post("/", createRol);
+
+// UPDATE role
+router.put("/:id", updateRol);
+
+// DELETE role
+router.delete("/:id", deleteRol);
+
+export { router };

@@ -1,63 +1,65 @@
 import { Request, Response } from "express";
-// import {
-//   insertCar,
-//   getCars,
-//   getCar,
-//   updateCar,
-//   deleteCar,
-// } from "../services/item";
 import { handleHttp } from "../utils/error.handle";
 import { models } from "@/db/database";
 
-const getRol = async (req: Request, res: Response) => {
+// ✅ GET ALL
+const getRoles = async (req: Request, res: Response) => {
   try {
-    // const { id } = params;
-    // const response = await getCar(id);
-    // const data = response ? response : "NOT_FOUND";
-    const nuevoRol = await models.roles.create(req.body);
-    res.json(nuevoRol);
+    const roles = await models.roles.findAll();
+    return res.json(roles.map(r => r.toJSON()));
   } catch (e) {
-    handleHttp(res, "ERROR_GET_ITEM", e);
+    handleHttp(res, "ERROR_GET_ROLES", e);
   }
 };
 
-// const getItems = async (req: Request, res: Response) => {
-//   try {
-//     const response = await getCars();
-//     res.send(response);
-//   } catch (e) {
-//     handleHttp(res, "ERROR_GET_ITEMS");
-//   }
-// };
+// ✅ GET BY ID
+const getRol = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const rol = await models.roles.findByPk(id);
+    if (!rol) return res.status(404).json({ message: "Rol no encontrado" });
+    return res.json(rol.toJSON());
+  } catch (e) {
+    handleHttp(res, "ERROR_GET_ROL", e);
+  }
+};
 
-// const updateItem = async ({ params, body }: Request, res: Response) => {
-//   try {
-//     const { id } = params;
-//     const response = await updateCar(id, body);
-//     res.send(response);
-//   } catch (e) {
-//     handleHttp(res, "ERROR_UPDATE_ITEM");
-//   }
-// };
+// ✅ CREATE
+const createRol = async (req: Request, res: Response) => {
+  try {
+    const nuevoRol = await models.roles.create(req.body);
+    return res.status(201).json(nuevoRol.toJSON());
+  } catch (e) {
+    handleHttp(res, "ERROR_CREATE_ROL", e);
+  }
+};
 
-// const postItem = async ({ body }: Request, res: Response) => {
-//   try {
-//     const responseItem = await insertCar(body);
-//     res.send(responseItem);
-//   } catch (e) {
-//     handleHttp(res, "ERROR_POST_ITEM", e);
-//   }
-// };
+// ✅ UPDATE
+const updateRol = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const rol = await models.roles.findByPk(id);
+    if (!rol) return res.status(404).json({ message: "Rol no encontrado" });
 
-// const deleteItem = async ({ params }: Request, res: Response) => {
-//   try {
-//     const { id } = params;
-//     const response = await deleteCar(id);
-//     res.send(response);
-//   } catch (e) {
-//     handleHttp(res, "ERROR_DELETE_ITEM");
-//   }
-// };
+    await rol.update(req.body);
+    return res.json(rol.toJSON());
+  } catch (e) {
+    handleHttp(res, "ERROR_UPDATE_ROL", e);
+  }
+};
 
-export { getRol };
-// , getItems, postItem, updateItem, deleteItem
+// ✅ DELETE
+const deleteRol = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const rol = await models.roles.findByPk(id);
+    if (!rol) return res.status(404).json({ message: "Rol no encontrado" });
+
+    await rol.destroy();
+    return res.json({ message: "Rol eliminado correctamente" });
+  } catch (e) {
+    handleHttp(res, "ERROR_DELETE_ROL", e);
+  }
+};
+
+export { getRoles, getRol, createRol, updateRol, deleteRol };
