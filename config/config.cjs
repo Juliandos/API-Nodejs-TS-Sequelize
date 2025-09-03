@@ -1,6 +1,6 @@
-import "dotenv/config";
+require("dotenv").config();
 
-export default {
+module.exports = {
   development: {
     username: process.env.DB_USER || "root",
     password: process.env.DB_PASS || null,
@@ -11,7 +11,7 @@ export default {
   test: {
     username: process.env.DB_USER || "root",
     password: process.env.DB_PASS || null,
-    database: process.env.DB_TEST_NAME || "api_node_sequelize",
+    database: process.env.DB_NAME || "api_node_sequelize_test",
     host: process.env.DB_HOST || "127.0.0.1",
     dialect: "mysql"
   },

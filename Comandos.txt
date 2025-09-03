@@ -11,3 +11,5 @@ npm install --save-dev sequelize-auto
 npx sequelize-cli migration:generate --name create-usuario
 npx sequelize-cli db:migrate
 npx sequelize-auto -o "./src/models" -d api_node_sequelize -u root -h localhost -e mysql -l ts
+npm install bcrypt jsonwebtoken passport passport-google-oauth20 cookie-parser
+npm install --save-dev @types/bcrypt @types/jsonwebtoken @types/passport @types/passport-google-oauth20
