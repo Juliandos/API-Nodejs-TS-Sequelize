@@ -113,7 +113,7 @@ const logout = async (req: Request, res: Response) => {
     if (!user)
       return res.status(404).json({ message: "Usuario no encontrado" });
 
-    user.refreshToken = null;
+    user.refreshToken = undefined;
     await user.save();
     return res.json({ message: "Logout OK" });
   } catch (e) {

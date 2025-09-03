@@ -9,11 +9,13 @@ export interface usuariosAttributes {
   rolId?: number;
   createdAt: Date;
   updatedAt: Date;
+  password: string;
+  refreshToken?: string;
 }
 
 export type usuariosPk = "id";
 export type usuariosId = usuarios[usuariosPk];
-export type usuariosOptionalAttributes = "id" | "rolId" | "createdAt" | "updatedAt";
+export type usuariosOptionalAttributes = "id" | "rolId" | "createdAt" | "updatedAt" | "refreshToken";
 export type usuariosCreationAttributes = Optional<usuariosAttributes, usuariosOptionalAttributes>;
 
 export class usuarios extends Model<usuariosAttributes, usuariosCreationAttributes> implements usuariosAttributes {
@@ -23,6 +25,8 @@ export class usuarios extends Model<usuariosAttributes, usuariosCreationAttribut
   rolId?: number;
   createdAt!: Date;
   updatedAt!: Date;
+  password!: string;
+  refreshToken?: string;
 
   // usuarios belongsTo roles via rolId
   rol!: roles;
@@ -55,13 +59,13 @@ export class usuarios extends Model<usuariosAttributes, usuariosCreationAttribut
         key: 'id'
       }
     },
-    createdAt: {
-      type: DataTypes.DATE,
+    password: {
+      type: DataTypes.STRING(255),
       allowNull: false
     },
-    updatedAt: {
-      type: DataTypes.DATE,
-      allowNull: false
+    refreshToken: {
+      type: DataTypes.STRING(255),
+      allowNull: true
     }
   }, {
     sequelize,
